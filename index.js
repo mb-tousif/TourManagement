@@ -8,14 +8,14 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 dotenv.config();
-app.use(cors(config()));
+app.use(cors());
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 connect();
 
-app.use("/api", Routes);
+app.use("/api/v1", Routes);
 
 app.get("/", (req, res) => {
   res.send("Vercel is ready to use!");
