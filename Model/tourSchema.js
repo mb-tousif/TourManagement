@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const tourSchema = mongoose.Schema(
   {
     id: String,
-    userName: {
+    name: {
       type: String,
       required: true,
       min: 5,
@@ -26,7 +26,7 @@ export const tourSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    img: {
+    image: {
       type: String,
       required: true,
       trim: true,
