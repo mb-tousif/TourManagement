@@ -31,6 +31,7 @@ export const tourSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    views: Number,
   },
   { timestamps: true }
 );

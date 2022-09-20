@@ -1,6 +1,19 @@
 import TourData from "../Model/tourSchema.js";
 
-// Data Save API
+// API For All Data with Pagination
+export const getTourData = async ( req, res ) => {
+  try {
+    const { limit, page } = req.query;
+    const result = await TourData.find({}).skip(+page * limit).limit(+limit)
+    // const result = await TourData.find({}, "name image");
+    // const result = await TourData.find({}).sort({ price: -1 });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+// Data Post API
 export const postTourData = async ( req, res ) => {
     try {
         const data = req.body
@@ -12,18 +25,6 @@ export const postTourData = async ( req, res ) => {
         res.status(500).json({ error: error.message })
     }
 };
-
-// Get All Data API with Pagination
-export const getTourData = async ( req, res ) => {
-     try {
-       const { limit, page } = req.query;
-       const result = await TourData.find({}, "name image").skip(+page * limit).limit(+limit).sort({price: -1})
-       res.status(200).json(result);
-     } catch (error) {
-       res.status(500).json({ error: error.message });
-     }
-}
-
 
 // API for get Data by ID
 export const getTourDataById = async ( req, res ) => {
@@ -47,4 +48,24 @@ export const updateTourData = async ( req, res ) => {
      } catch (error) {
        res.status(500).json({ error: error.message });
      }
+}
+
+// Three Trending Data API
+export const trendingTourData = async(req, res)=>{
+    try{
+      const result = await TourData.find({}).sort({ views: -1 }).limit(3);
+      res.status(200).json(result)
+    }catch(error){
+      res.status(500).json({ error: error.message });
+    }
+}
+
+// Three cheapest Data API
+export const cheapestTourData = async(req, res)=>{
+    try{
+      const result = await TourData.find({}).sort({price: 1}).limit(3);
+      res.status(200).json(result)
+    }catch(error){
+      res.status(500).json({ error: error.message });
+    }
 }
